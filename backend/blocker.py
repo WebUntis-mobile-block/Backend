@@ -15,7 +15,6 @@ class WebUntisAccountBlocker():
         self.logger = ConfigLogger().setup()
         self.url = "https://aoide.webuntis.com/WebUntis/j_spring_security_check"
         self.logurl = "https://aoide.webuntis.com/WebUntis/"
-        self.attempts = 0
         self.payload = {
             'school': 'school',
             'j_username': 'user',
@@ -38,22 +37,24 @@ class WebUntisAccountBlocker():
                 stringtext = results.get_text()
                 array = stringtext.split(';')
                 untis = array[3].strip()
-                untis = re.sub("\s\s+"," ", untis)
+                untis = re.sub(r"\s\s+"," ", untis)
                 untis = untis[18:-6].split(',"lastUserName"')[0] +"}}"
-                structjson = json.loads(untis)
-                self.attempts += 1
+                login_status = json.loads(untis)
             except IndexError:
                 self.logger.warning("Invalid school input")
-                return("Invalid school input")
+                return "Invalid school input"
 
-            error_msg = structjson["loginServiceConfig"]["loginError"]
+            error_msg = login_status["loginServiceConfig"]["loginError"]
 
             if error_msg == "User is temporarily blocked":
                 self.logger.info("successfully blocked %s for 30mins", self.payload['j_username'])
-                return(f"successfully blocked {self.payload['j_username']} for 30mins")
+                return f"successfully blocked {self.payload['j_username']} for 30mins"
             elif error_msg == "Account expired" or error_msg == "User is inactive":
-                self.logger.info("Failed to block %s, because his account expired or is inactive", self.payload['j_username'])
-                return(f"Failed to block {self.payload['j_username']}")
+                self.logger.info(
+                    "Failed to block %s, because his account expired or is inactive",
+                    self.payload['j_username']
+                )
+                return f"Failed to block {self.payload['j_username']}"
 
     def get_saved_schools(self):
         "gets save school id's from file"
@@ -100,7 +101,7 @@ class WebUntisAccountBlocker():
                         validinput = True
                     except IndexError:
                         validinput = False
-                elif school.isdigt():
+                elif school.isdigit():
                     school = schoollist[int(school) - 1]
                     validinput = True
                 else:
