@@ -39,4 +39,4 @@ class WebBlockAPI:
 
     def run(self):
         """runs the app"""
-        self.app.run(debug=False)
+        self.app.run(debug=False, host='0.0.0.0')
