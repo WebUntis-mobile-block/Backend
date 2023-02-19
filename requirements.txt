@@ -1,0 +1,5 @@
+beautifulsoup4==4.11.2
+coloredlogs==15.0.1
+Flask==2.2.3
+requests_html==0.10.0
+validators==0.20.0
