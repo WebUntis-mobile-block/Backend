@@ -1,4 +1,4 @@
-"""importing Modules"""
+"""Blocker Module to block users"""
 import json
 import os
 import re
@@ -6,7 +6,7 @@ import re
 import validators
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
-from logging_formatter import ConfigLogger
+from handlers.logging_formatter import ConfigLogger
 
 
 class WebUntisAccountBlocker():
@@ -60,11 +60,11 @@ class WebUntisAccountBlocker():
         "gets save school id's from file"
         try:
             schoollist = []
-            if os.path.isfile("backend/school.dat") is False:
-                open('backend/school.dat', 'w+', encoding="utf8")
+            if os.path.isfile("school.dat") is False:
+                open('school.dat', 'w+', encoding="utf8")
                 return schoollist
             else:
-                with open("backend/school.dat", "r", encoding="utf8") as file:
+                with open("school.dat", "r", encoding="utf8") as file:
                     lines = file.readlines()
                     if len(lines) > 0:
                         for line in lines:
@@ -109,7 +109,7 @@ class WebUntisAccountBlocker():
 
             # writes new school to file if its not saved there
             if school not in schoollist:
-                with open("backend/school.dat", "a", encoding="utf8") as file:
+                with open("school.dat", "a", encoding="utf8") as file:
                     if len(schoollist) > 0:
                         file.write("\n" + school)
                     else:

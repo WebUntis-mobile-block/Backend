@@ -1,7 +1,7 @@
 """Module to start a webservice to interact with the user"""
 from flask import Flask, request
-from blocker import WebUntisAccountBlocker
-from logging_formatter import ConfigLogger
+from handlers.blocker import WebUntisAccountBlocker
+from handlers.logging_formatter import ConfigLogger
 
 class WebBlockAPI:
     """Lets the client interact with the backend, with diffrent methods"""
