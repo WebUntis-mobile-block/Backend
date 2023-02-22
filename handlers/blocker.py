@@ -73,7 +73,7 @@ class WebUntisAccountBlocker():
                     return schoollist
         except (TypeError, KeyError, ValueError) as exeption:
             self.logger.error("Error occurred while getting saved schools: %s", exeption)
-            return exeption
+            return "An exeption has accured"
 
     def set_username(self, username):
         """sets the username of the wanted client"""
@@ -83,7 +83,7 @@ class WebUntisAccountBlocker():
             return f"username set to {self.payload['j_username']}"
         except (TypeError, KeyError, ValueError) as exeption:
             self.logger.error("Error occurred while setting the username: %s", exeption)
-            return exeption
+            return "An exeption has accured"
 
     def set_school(self, schoolname):
         """lets the user set the school"""
@@ -120,4 +120,4 @@ class WebUntisAccountBlocker():
             return f"school set to {self.payload['school']}"
         except (TypeError, KeyError, ValueError) as exception:
             self.logger.error("Error occurred while setting the school: %s", exception)
-            return exception
+            return "An exeption has accured"

@@ -10,7 +10,7 @@ class WebBlockAPI:
         self.app.route('/api/schools', methods=['GET'])(self.get_schools)
         self.app.route('/api/school', methods=['POST'])(self.set_school)
         self.app.route('/api/user', methods=['POST'])(self.set_user)
-        self.app.route('/api/block', methods=['POST'])(self.send_block)
+        self.app.route('/api/block', methods=['GET'])(self.send_block)
         self.blocker = WebUntisAccountBlocker()
         self.logger = ConfigLogger().setup()
         self.logger.info("Server started")
