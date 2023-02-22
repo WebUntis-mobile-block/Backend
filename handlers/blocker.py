@@ -24,6 +24,7 @@ class WebUntisAccountBlocker():
 
     def block(self):
         """blocks the user"""
+        attempts = 0
         while True:
             #webscapes webuntis
             session = HTMLSession()
@@ -43,6 +44,8 @@ class WebUntisAccountBlocker():
             except IndexError:
                 self.logger.warning("Invalid school input")
                 return "Invalid school input"
+            
+            attempts += 1
 
             error_msg = login_status["loginServiceConfig"]["loginError"]
 
@@ -55,6 +58,9 @@ class WebUntisAccountBlocker():
                     self.payload['j_username']
                 )
                 return f"Failed to block {self.payload['j_username']}"
+            elif attempts >= 10:
+                self.logger.info("To many attempts, propably wrong username")
+                return "wrong username"
 
     def get_saved_schools(self):
         "gets save school id's from file"
